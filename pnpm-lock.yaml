@@ -36,6 +36,9 @@ importers:
       '@babel/preset-env':
         specifier: ^7.20.10
         version: 7.26.0(@babel/core@7.26.0)
+      npm-version-bump:
+        specifier: ^1.0.0
+        version: 1.0.0
 
 packages:
 
@@ -559,6 +562,9 @@ packages:
     resolution: {integrity: sha512-rnK6hJBS6mwc+Bkab+PGPs9OiS0i/3kdTO+CkI8V0/VrW3vmz7O2Pxjw/owOlmo6PKEIxRSeZKv/kuL9itnpYA==}
     hasBin: true
 
+  after-all-results@2.0.0:
+    resolution: {integrity: sha512-2zHEyuhSJOuCrmas9YV0YL/MFCWLxe1dS6k/ENhgYrb/JqyMnadLN4iIAc9kkZrbElMDyyAGH/0J18OPErOWLg==}
+
   archiver-utils@2.1.0:
     resolution: {integrity: sha512-bEL/yUb/fNNiNTuUz979Z0Yg5L+LzLxGJz8x79lYmR54fmTIb6ob/hNQgkQnIUDWIFjZVQwl9Xs356I6BAMHfw==}
     engines: {node: '>= 6'}
@@ -746,6 +752,9 @@ packages:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
 
+  git-state@2.5.2:
+    resolution: {integrity: sha512-Iq3zs2/Bg6dOMCBaE7GEbZKb+XV/hEFJSMNs83dhrLcuerEwPCA35/V3lK9GEAZDgpfmwqOTsvjL8c9khzyq+A==}
+
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Glob versions prior to v9 are no longer supported
@@ -893,8 +902,14 @@ packages:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
 
+  npm-version-bump@1.0.0:
+    resolution: {integrity: sha512-jDk+XeLsqXNQQYj8ebFNc0S8FSfqTfI8k6dC/Ehtk9qpBXh6SgolBVLmHIsbAuagCItrfQk5hPN2FkoHO1j7OQ==}
+
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
+
+  package-json-io@1.0.0:
+    resolution: {integrity: sha512-W8P8B6u5EiIRq8+YHBuI5O1ulW8+n+47LshEA+s+3eJCo+N1XY2vAvk0qPpsJhsuhTMxgDdV4N624AkT5uqTxg==}
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
@@ -982,6 +997,10 @@ packages:
   saxes@5.0.1:
     resolution: {integrity: sha512-5LBh1Tls8c9xgGjw3QrMwETmTMVk0oFgvrFSvWx62llR2hcEInrKNZ2GZCCuuy2lvWrdl5jhbpeqc5hRYKFOcw==}
     engines: {node: '>=10'}
+
+  semver@5.7.2:
+    resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
+    hasBin: true
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
@@ -1742,6 +1761,8 @@ snapshots:
 
   '@vercel/ncc@0.38.3': {}
 
+  after-all-results@2.0.0: {}
+
   archiver-utils@2.1.0:
     dependencies:
       glob: 7.2.3
@@ -1956,6 +1977,10 @@ snapshots:
 
   gensync@1.0.0-beta.2: {}
 
+  git-state@2.5.2:
+    dependencies:
+      after-all-results: 2.0.0
+
   glob@7.2.3:
     dependencies:
       fs.realpath: 1.0.0
@@ -2077,9 +2102,17 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
+  npm-version-bump@1.0.0:
+    dependencies:
+      git-state: 2.5.2
+      package-json-io: 1.0.0
+      semver: 5.7.2
+
   once@1.4.0:
     dependencies:
       wrappy: 1.0.2
+
+  package-json-io@1.0.0: {}
 
   pako@1.0.11: {}
 
@@ -2165,6 +2198,8 @@ snapshots:
   saxes@5.0.1:
     dependencies:
       xmlchars: 2.2.0
+
+  semver@5.7.2: {}
 
   semver@6.3.1: {}
 
