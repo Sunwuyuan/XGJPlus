@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /*
  * Copyright (C) 2025-2025 SunWuyuan <https://github.com/sunwuyuan>.
  *
