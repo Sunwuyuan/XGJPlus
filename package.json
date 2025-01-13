@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "type": "module",
   "bin": {
-    "xgjplus": "dist/index.js"
+    "xgjplus": "node dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
