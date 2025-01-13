@@ -33,6 +33,7 @@ jobs:
       - run: git config --global user.name "wydev"
       - run: npm cache clean --force
       - run: npm i
+      - run: npm run build
       - run: npm version patch
       - run: npm config get registry
       - run: npm publish
