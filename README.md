@@ -14,22 +14,20 @@ npm install -g xgjplus
 
 ## 使用
 
-### 构建项目
-
-在使用前需要先构建项目：
-
-```bash
-npm run build
-```
-
-### 运行项目
-
-构建完成后，可以通过以下命令运行项目：
+可以通过以下命令运行：
 
 ```bash
 xgjplus
 ```
 
+## 开发
+
+
+### 构建项目
+
+```bash
+npm run build
+```
 
 ## 许可证
 
