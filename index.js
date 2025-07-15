@@ -258,7 +258,7 @@ async function getParentInfo(members) {
 
 // 处理不同类型数据的函数
 async function processDataByType(data, classMap) {
-  console.log(classMap);
+  //console.log(classMap);
   if (data.type === 0) {
     // 班级信息类型
     const membersData = await getClassMembers(data.cls);
