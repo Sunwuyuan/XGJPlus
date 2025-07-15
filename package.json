@@ -2,21 +2,21 @@
   "name": "xgjplus",
   "version": "1.0.5",
   "description": "班级小管家工具",
-  "main": "dist/index.js",
+  "main": "index.js",
   "type": "module",
   "bin": {
     "xgjplus": "dist/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "start": "node dist/index.js",
+    "start": "node index.js",
     "build": "node build.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sunwuyuan/xgjplus.git"
   },
-  "author": "sunwuyuan",
+  "author": "Sunwuyuan",
   "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/sunwuyuan/xgjplus/issues"
@@ -29,7 +29,8 @@
     "iconv-lite": "^0.6.3",
     "progress": "^2.0.3",
     "qrcode-terminal": "^0.12.0",
-    "readline": "^1.3.0"
+    "readline": "^1.3.0",
+    "user-agents": "^1.1.601"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
