@@ -22,7 +22,7 @@
     "url": "https://github.com/sunwuyuan/xgjplus/issues"
   },
   "homepage": "https://github.com/sunwuyuan/xgjplus#readme",
-  "dependencies": {
+  "devDependencies": {
     "@vercel/ncc": "^0.38.3",
     "axios": "^1.7.9",
     "exceljs": "^4.4.0",
@@ -30,9 +30,7 @@
     "progress": "^2.0.3",
     "qrcode-terminal": "^0.12.0",
     "readline": "^1.3.0",
-    "user-agents": "^1.1.601"
-  },
-  "devDependencies": {
+    "user-agents": "^1.1.601",
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.10",
     "npm-version-bump": "^1.0.0"
