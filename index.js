@@ -26,6 +26,7 @@ import qrcode from "qrcode-terminal";
 import ExcelJS from "exceljs";
 import UserAgent from "user-agents";
 import { existsSync, readFileSync } from "fs";
+import { randomUUID } from "crypto";
 
 const CACHE_FILE = "cache.json";
 
@@ -60,6 +61,18 @@ function isTokenValid(cache) {
   // Check if token is less than 24 hours old
   const tokenAge = Date.now() - cache.timestamp;
   return tokenAge < 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+}
+
+// 从登录令牌中解析当前用户的 openid
+function getOpenidFromJwt(token) {
+  try {
+    const payload = JSON.parse(
+      Buffer.from(token.split(".")[1], "base64url").toString("utf8")
+    );
+    return payload.openid || "";
+  } catch (error) {
+    return "";
+  }
 }
 
 let imprint = process.env.IMPRINT || "";
@@ -290,11 +303,14 @@ async function processScoreData(data, classMap) {
   for (const name of studentNames) {
     progressBar.tick();
     const scoreDetail = await getStudentScore(name, data.score);
-    if (scoreDetail) {
+    if (scoreDetail && scoreDetail.length > 0) {
       results.push({ name, scoreDetail });
       console.log(
         `\r ${progressBar.curr}号 ${name} - ${scoreDetail.length}科目成绩获取成功`
       );
+    } else if (scoreDetail) {
+      results.push({ name, scoreDetail: [{ subject: "缺考", score: "缺考" }] });
+      console.log(`\r ${progressBar.curr}号 ${name} - 缺考`);
     } else {
       results.push({ name, scoreDetail: [{ subject: "错误", score: "错误" }] });
       console.log(`\r ${progressBar.curr}号 ${name} - 获取成绩失败`);
@@ -555,12 +571,18 @@ async function getStudentScore(name, id) {
   try {
     const response = await axios.post(
       "https://b.welife001.com/getStudentScoreById",
-      { id, name },
+      { id, preview: false, name, score_phone_verified: false },
       {
-        headers: { ...getHeaders(), imprint },
+        headers: {
+          ...getHeaders(),
+          imprint,
+          authorization: jwttoken,
+          "x-rid": randomUUID(),
+        },
       }
     );
-    return response.data.data.studentScore.score_detail;
+    // 无成绩记录时返回空数组，由调用方按缺考处理
+    return response.data.data?.studentScore?.score_detail || [];
   } catch (error) {
     console.error(`Error fetching score for ${name}:`, error);
     return null;
@@ -615,6 +637,15 @@ Copyright (C) 2025-${new Date().getFullYear()} SunWuyuan <https://github.com/Sun
 
   if (!jwttoken) {
     await login();
+  }
+
+  // 成绩接口的 imprint 使用当前登录用户自己的 openid，优先从登录令牌中解析
+  const tokenOpenid = getOpenidFromJwt(jwttoken);
+  if (tokenOpenid) {
+    imprint = tokenOpenid;
+    console.log("已从登录令牌解析到当前用户 openid（用作成绩接口的 imprint）");
+  } else {
+    console.log("未能从登录令牌解析 openid，成绩接口将退回使用条目创建者的 openid");
   }
 
   const childList = await getUserChildInfo();
@@ -674,7 +705,9 @@ Copyright (C) 2025-${new Date().getFullYear()} SunWuyuan <https://github.com/Sun
     console.log("所有班级处理完成！");
   } else {
     const selectedInfo = parentInfo[selectedIndex - 1];
-    imprint = selectedInfo.creator_wx_openid;
+    if (!imprint) {
+      imprint = selectedInfo.creator_wx_openid;
+    }
     const processedData = await processDataByType(selectedInfo, classMap);
     if (processedData) {
       await generateExcel(processedData);
